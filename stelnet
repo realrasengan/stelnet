@@ -13,7 +13,7 @@ sock.on('connect',(d) => {
   process.stdin.pipe(sock);
   process.stdin.resume();
 });
-sock.on('data',(d) => { console.log(d); });
+sock.on('data',(d) => { process.stdout.write(d); });
 sock.on('end', () => {
   console.log('Connection ended.');
   process.exit(1);
