@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 const tls = require('tls');
 
-if(process.argv.length!=4) {
+if(process.argv.length<4) {
   console.log("Syntax error: "+process.argv[1]+" <server> [port]");
   process.exit(-1);
 }
-let sock = tls.connect(process.argv[3],process.argv[2]);
+let insecure=true;
+if(process.argv.length==5) insecure=false;
+let sock = tls.connect(process.argv[3],process.argv[2],{rejectUnauthorized:insecure});
 sock.setEncoding('utf8');
 sock.on('connect',(d) => {
   process.stdin.pipe(sock);

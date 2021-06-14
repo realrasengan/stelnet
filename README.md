@@ -15,6 +15,13 @@ Make sure you have nodejs/npm installed on your system, and then, copy stelnet t
 stelnet example.com 6697
 ```
 
+Add an additional parameter to connect to an insecure host
+
+```
+stelnet insecure.com 6697 insecure
+```
+
+
 ## Copyright
 
 MIT
