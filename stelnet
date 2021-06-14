@@ -7,14 +7,18 @@ if(process.argv.length<4) {
 }
 let insecure=true;
 if(process.argv.length==5) insecure=false;
+
+console.log("Trying "+process.argv[2]+"...");
 let sock = tls.connect(process.argv[3],process.argv[2],{rejectUnauthorized:insecure});
 sock.setEncoding('utf8');
 sock.on('connect',(d) => {
+  console.log("Connected to "+process.argv[2]+".");
+
   process.stdin.pipe(sock);
   process.stdin.resume();
 });
 sock.on('data',(d) => { process.stdout.write(d); });
 sock.on('end', () => {
-  console.log('Connection ended.');
+  console.log('Connection closed.');
   process.exit(1);
 });
