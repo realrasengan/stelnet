@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+const tls = require('tls');
+
+if(process.argv.length!=4) {
+  console.log("Syntax error: "+process.argv[1]+" <server> [port]");
+  process.exit(-1);
+}
+let sock = tls.connect(process.argv[3],process.argv[2]);
+sock.setEncoding('utf8');
+sock.on('connect',(d) => {
+  process.stdin.pipe(sock);
+  process.stdin.resume();
+});
+sock.on('data',(d) => { console.log(d); });
+sock.on('end', () => {
+  console.log('Connection ended.');
+  process.exit(1);
+});
